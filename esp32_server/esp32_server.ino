@@ -1,4 +1,5 @@
 #include <WiFi.h>
+#include <ArduinoJson.h>
 
 const char* ssid = "CARLA"; // Replace with your WiFi credentials
 const char* password = "amorpropio";
@@ -32,8 +33,48 @@ void loop() {
   Serial.println(localIP);
   if (client) {
     Serial.println("Client connected!");
+          // Define a buffer for storing the incoming JSON data
+      char jsonBuffer[512]; // Adjust buffer size as needed
+      int bytesRead = client.readBytes(jsonBuffer, sizeof(jsonBuffer));
 
-    while (client.connected()) {
+      // Check if any data was read
+      if (bytesRead > 0) {
+        Serial.print("Received from client (");
+        Serial.print(bytesRead);
+        Serial.println(" bytes):");
+
+        // Create a JsonDocument object to parse the JSON data
+        DynamicJsonDocument doc(512);; // Adjust document size as needed
+        DeserializationError error = deserializeJson(doc, jsonBuffer, bytesRead);
+
+        // Check for parsing errors
+        if (error) {
+          Serial.print("Error parsing JSON: ");
+          Serial.println(error.c_str());
+        } else {
+          // Access data from the JSON object (replace with your property names)
+          int value = doc["value"];
+          String valueType = doc["valueType"];
+
+          Serial.print("Received value: ");
+          Serial.println(value);
+          Serial.print("Received value type: ");
+          Serial.println(valueType);
+
+          // Process the received value and valueType
+          // (e.g., control motors, update states)
+
+          // Send a response (optional)
+          client.println("Message received!");
+          delay(500);
+          client.stop(); // Close the connection
+          Serial.println("Client disconnected.");
+        }
+      }
+
+    
+
+  /*  while (client.connected()) {
       Serial.print("Inside the while loop");
       String line = client.readStringUntil('\n'); // Read data until newline
 
@@ -50,7 +91,7 @@ void loop() {
         Serial.println("Client disconnected.");
       }
       
-    }
+    }*/
    
   }
 }
