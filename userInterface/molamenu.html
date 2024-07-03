@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ESP32 Control Panel</title>
+  <style>
+    /* Style the body with white background */
+    body {
+      background-color: white;
+    }
+
+    /* Style the header with black-gray background and white text */
+    header {
+      background-color: #333;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      height: 8vh; /* Set height to 50% of viewport height */
+    }
+
+    /* Style for all buttons */
+    button {
+      padding: 1rem;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* Style for gray buttons */
+    .gray-button {
+      background-color: gray;
+      color: white;
+      transition: background-color 0.3s ease;
+    }
+
+    /* Button hover effect for changing background color */
+    .gray-button:hover {
+      background-color: lightblue;
+    }
+
+    /* Style for the red stop button */
+    .stop-button {
+      background-color: red;
+      color: white;
+      border-radius: 50%;
+      width: 150px;
+      height: 150px;
+      font-size: 1.5rem; /* Increase font size for Stop button */
+    }
+
+    .stop-button:hover {
+      background-color: darkred;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Stepper Motor Control</h1>
+  </header>
+
+  <div style="display: flex; flex-wrap: wrap; justify-content: space-around; padding: 1rem;">
+
+    <div style="margin: 0.5rem;">
+      <label for="accelerationInput">Acceleration:</label>
+      <input type="number" id="accelerationInput" name="acceleration" required>
+      <br>
+      <button class="gray-button" onclick="sendValue('acceleration')">Send</button>
+    </div>
+
+    <div style="margin: 0.5rem;">
+      <label for="velocityInput">Velocity:</label>
+      <input type="number" id="velocityInput" name="velocity" required>
+      <br>
+      <button class="gray-button" onclick="sendValue('velocity')">Send</button>
+    </div>
+
+    <div style="margin: 0.5rem;">
+      <button class="gray-button" onclick="sendValue('clockwise')">Clockwise</button>
+    </div>
+
+    <div style="margin: 0.5rem;">
+      <button class="gray-button" onclick="sendValue('counter-clockwise')">Counter-Clockwise</button>
+    </div>
+
+    <div style="margin: 0.5rem;">
+      <label for="stepsInput">Steps:</label>
+      <input type="number" id="stepsInput" name="steps" required>
+      <br>
+      <button class="gray-button" onclick="sendValue('move')">Move</button>
+    </div>
+
+    <div style="margin: 0.5rem; align-self: center;">
+      <button class="stop-button" onclick="sendValue('stop')">STOP</button>
+    </div>
+  </div>
+
+  <script>
+      function sendValue(valueType) {
+        // Get the value from the corresponding input field based on valueType
+        let value;
+        if (valueType === 'acceleration') {
+          value = document.getElementById('accelerationInput').value;
+        } else if (valueType === 'velocity') {
+          value = document.getElementById('velocityInput').value;
+        } else if (valueType === 'move') {
+          value = document.getElementById('stepsInput').value;
+        } else {
+          value = valueType === 'clockwise' ? 1 : 0; // Send 1 for clockwise, 0 for counter-clockwise
+        }
+
+        // Implement logic to send the value (along with valueType) to the Node.js server
+        // (This part requires server-side implementation, likely using WebSockets or TCP/IP)
+        const ws = new WebSocket('ws://localhost:8080'); // Replace with your server's WebSocket address
+        // OR: Use TCP/IP socket if chosen (refer to server-side code)
+        ws.onopen = () => {
+          const dataToSend = { // Create an object to send both value and valueType
+            value: value,
+            valueType: valueType
+          };
+          ws.send(JSON.stringify(dataToSend)); // Send data as a JSON string
+        };
+
+        ws.onmessage = (message) => {
+          console.log("Received response from server:", message.data);
+        };
+    }
+  </script>
+</body>
+</html>
