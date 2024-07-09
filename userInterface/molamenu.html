@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ESP32 Control Panel</title>
+  <title>Steppe Motor Control - Silvio tests</title>
   <style>
     /* Style the body with white background */
     body {
@@ -44,8 +44,8 @@
       background-color: red;
       color: white;
       border-radius: 50%;
-      width: 150px;
-      height: 150px;
+      width: 140px;
+      height: 140px;
       font-size: 1.5rem; /* Increase font size for Stop button */
     }
 
@@ -57,63 +57,202 @@
 
 <body>
   <header>
-    <h1>Stepper Motor Control</h1>
+    <h1>Stepper Motor Control - Silvio Tests</h1>
   </header>
 
   <div style="display: flex; flex-wrap: wrap; justify-content: space-around; padding: 1rem;">
-
+    <!-- Control of Motor 1-->
     <div style="margin: 0.5rem;">
-      <label for="accelerationInput">Acceleration:</label>
-      <input type="number" id="accelerationInput" name="acceleration" required>
+      <label for="accelerationInput1">Acceleration M1:</label>
+      <input type="number" id="accelerationInput1" name="acceleration" required>
       <br>
-      <button class="gray-button" onclick="sendValue('acceleration')">Send</button>
+      <button class="gray-button" onclick="sendValue('accelerationM1')">Send M1</button>
     </div>
 
     <div style="margin: 0.5rem;">
-      <label for="velocityInput">Velocity:</label>
-      <input type="number" id="velocityInput" name="velocity" required>
+      <label for="velocityInput1">Velocity M1:</label>
+      <input type="number" id="velocityInput1" name="velocity" required>
       <br>
-      <button class="gray-button" onclick="sendValue('velocity')">Send</button>
+      <button class="gray-button" onclick="sendValue('velocityM1')">Send M1</button>
     </div>
 
     <div style="margin: 0.5rem;">
-      <button class="gray-button" onclick="sendValue('clockwise')">Clockwise</button>
+      <button class="gray-button" onclick="sendValue('clockwiseM1')">Clockwise M1</button>
     </div>
 
     <div style="margin: 0.5rem;">
-      <button class="gray-button" onclick="sendValue('counter-clockwise')">Counter-Clockwise</button>
+      <button class="gray-button" onclick="sendValue('counterClockwiseM1')">Counter-Clockwise M1</button>
     </div>
 
     <div style="margin: 0.5rem;">
-      <label for="stepsInput">Steps:</label>
-      <input type="number" id="stepsInput" name="steps" required>
+      <label for="stepsInput1">Steps:</label>
+      <input type="number" id="stepsInput1" name="steps" required>
       <br>
-      <button class="gray-button" onclick="sendValue('move')">Move</button>
+      <button class="gray-button" onclick="sendValue('moveM1')">Move M1</button>
     </div>
 
     <div style="margin: 0.5rem; align-self: center;">
-      <button class="stop-button" onclick="sendValue('stop')">STOP</button>
+      <button class="stop-button" onclick="sendValue('stopM1')">STOP M1</button>
     </div>
-  </div>
+
+    <!-- Control of Motor 2-->
+    <div style="margin: 0.5rem;">
+      <label for="accelerationInput2">Acceleration M2:</label>
+      <input type="number" id="accelerationInput2" name="acceleration" required>
+      <br>
+      <button class="gray-button" onclick="sendValue('accelerationM2')">Send M2</button>
+    </div>
+
+    <div style="margin: 0.5rem;">
+      <label for="velocityInput2">Velocity M2:</label>
+      <input type="number" id="velocityInput2" name="velocity" required>
+      <br>
+      <button class="gray-button" onclick="sendValue('velocityM2')">Send M2</button>
+    </div>
+
+    <div style="margin: 0.5rem;">
+      <button class="gray-button" onclick="sendValue('clockwiseM2')">Clockwise M2</button>
+    </div>
+
+    <div style="margin: 0.5rem;">
+      <button class="gray-button" onclick="sendValue('counterClockwiseM2')">Counter-Clockwise M2</button>
+    </div>
+
+    <div style="margin: 0.5rem;">
+      <label for="stepsInput2">Steps:</label>
+      <input type="number" id="stepsInput2" name="steps" required>
+      <br>
+      <button class="gray-button" onclick="sendValue('moveM2')">Move M2</button>
+    </div>
+
+    <div style="margin: 0.5rem; align-self: center;">
+      <button class="stop-button" onclick="sendValue('stopM2')">STOP M2</button>
+    </div>
+
+    <!-- Control of Motor 3-->
+    <div style="margin: 0.5rem;">
+      <label for="accelerationInput3">Acceleration M3:</label>
+      <input type="number" id="accelerationInput3" name="acceleration" required>
+      <br>
+      <button class="gray-button" onclick="sendValue('accelerationM3')">Send M3</button>
+    </div>
+
+    <div style="margin: 0.5rem;">
+      <label for="velocityInput3">Velocity M3:</label>
+      <input type="number" id="velocityInput3" name="velocity" required>
+      <br>
+      <button class="gray-button" onclick="sendValue('velocityM3')">Send M3</button>
+    </div>
+
+    <div style="margin: 0.5rem;">
+      <button class="gray-button" onclick="sendValue('clockwiseM3')">Clockwise M3</button>
+    </div>
+
+    <div style="margin: 0.5rem;">
+      <button class="gray-button" onclick="sendValue('counterClockwiseM3')">Counter-Clockwise M3</button>
+    </div>
+
+    <div style="margin: 0.5rem;">
+      <label for="stepsInput3">Steps:</label>
+      <input type="number" id="stepsInput3" name="steps" required>
+      <br>
+      <button class="gray-button" onclick="sendValue('moveM3')">Move M3</button>
+    </div>
+
+    <div style="margin: 0.5rem; align-self: center;">
+      <button class="stop-button" onclick="sendValue('stopM3')">STOP M3</button>
+    </div>
 
   <script>
       function sendValue(valueType) {
         // Get the value from the corresponding input field based on valueType
         let value;
-        if (valueType === 'acceleration') {
-          value = document.getElementById('accelerationInput').value;
-        } else if (valueType === 'velocity') {
-          value = document.getElementById('velocityInput').value;
-        } else if (valueType === 'move') {
-          value = document.getElementById('stepsInput').value;
-        } else {
-          value = valueType === 'clockwise' ? 1 : 0; // Send 1 for clockwise, 0 for counter-clockwise
+        switch (valueType) {
+
+          //motor 1
+          case 'accelerationM1':
+            value = document.getElementById('accelerationInput1').value;
+          break;
+
+          case 'velocityM1':
+            value = document.getElementById('velocityInput1').value;
+          break;
+
+          case 'moveM1':
+            value = document.getElementById('stepsInput1').value;
+          break;
+
+          case 'clockwiseM1':
+            value = '1';
+          break;
+
+          case 'counterClockwiseM1':
+            value = '1';
+          break;
+
+          case 'stopM1':
+            value = '1';
+          break;
+
+           //motor 2
+          case 'accelerationM2':
+            value = document.getElementById('accelerationInput2').value;
+          break;
+
+          case 'velocityM2':
+            value = document.getElementById('velocityInput2').value;
+          break;
+
+          case 'moveM2':
+            value = document.getElementById('stepsInput2').value;
+          break;
+
+          case 'clockwiseM2':
+            value = '1';
+          break;
+
+          case 'counterClockwiseM2':
+            value = '1';
+          break;
+
+          case 'stopM2':
+            value = '1';
+          break;
+
+          //motor 3
+          case 'accelerationM3':
+            value = document.getElementById('accelerationInput3').value;
+          break;
+
+          case 'velocityM3':
+            value = document.getElementById('velocityInput3').value;
+          break;
+
+          case 'moveM3':
+            value = document.getElementById('stepsInput3').value;
+          break;
+
+          case 'clockwiseM3':
+            value = '1';
+          break;
+
+          case 'counterClockwiseM3':
+            value = '1';
+          break;
+
+          case 'stopM3':
+            value = '1';
+          break;
+
+          default:
+            value = valueType === 0;
+          break;
+
         }
 
-        // Implement logic to send the value (along with valueType) to the Node.js server
-        // (This part requires server-side implementation, likely using WebSockets or TCP/IP)
+        // This is a webSocket to send data to node.js server
         const ws = new WebSocket('ws://localhost:8080'); // Replace with your server's WebSocket address
-        // OR: Use TCP/IP socket if chosen (refer to server-side code)
+
         ws.onopen = () => {
           const dataToSend = { // Create an object to send both value and valueType
             value: value,

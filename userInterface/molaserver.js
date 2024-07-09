@@ -12,27 +12,6 @@ wss.on('connection', (ws) => {
         const jsonData = JSON.parse(data);
         console.log('Received value from client:', jsonData);
 
-        // Process the received value (e.g., validate, format, etc.)
-        //const processedValue = parseFloat(message);
-
-        // Choose communication method for ESP32: WebSocket or TCP/IP
-        // **Option 1: Using a WebSocket (if ESP32 supports it):**
-
-        // Assuming you have a separate WebSocket server running on the ESP32:
-       /* const esp32Ws = new WebSocket('ws://your_esp32_ip:esp32_port'); // Replace with ESP32 WebSocket address
-
-        esp32Ws.onopen = () => {
-            esp32Ws.send(processedValue.toString());
-        };
-
-        esp32Ws.onmessage = (esp32Message) => {
-            console.log('Received response from ESP32:', esp32Message.data);
-            // You can send a response back to the client here if needed
-            ws.send(`ESP32 response: ${esp32Message.data}`);
-        };*/
-
-        // **Option 2: Using a TCP/IP socket (if ESP32 doesn't support WebSocket):**
-
         // Replace with your ESP32 IP address and port
        const esp32Socket = new net.Socket();
         esp32Socket.connect(8081, '192.168.0.91', () => {
