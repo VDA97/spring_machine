@@ -14,7 +14,7 @@ wss.on('connection', (ws) => {
 
         // Replace with your ESP32 IP address and port
        const esp32Socket = new net.Socket();
-        esp32Socket.connect(8081, '192.168.0.91', () => {
+        esp32Socket.connect(8081, '192.168.7.252', () => {
             console.log('Connected to ESP32');
             esp32Socket.write(data);
         });

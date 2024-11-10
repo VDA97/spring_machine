@@ -3,14 +3,14 @@
 #include "FastAccelStepper.h"
 
 // pinos do motor 1
-#define dirPinStepper_1 22
-#define enablePinStepper_1 23
-#define stepPinStepper_1 2
+#define dirPinStepper_1 2
+#define enablePinStepper_1 0
+#define stepPinStepper_1 4
 
 // pinos do motor 2
-#define dirPinStepper_2 13
-#define enablePinStepper_2 12
-#define stepPinStepper_2 25
+#define dirPinStepper_2 16
+#define enablePinStepper_2 17
+#define stepPinStepper_2 5
 
 // pinos do motor 2
 #define dirPinStepper_3 18
@@ -48,10 +48,12 @@ FastAccelStepper *stepper_2 = NULL;
 FastAccelStepper *stepper_3 = NULL;
 
 // conexão com wifi
-const char *ssid = "CARLA"; // Replace with your WiFi credentials
-const char *password = "amorpropio";
+const char *ssid = "SRG-Silvio 2G"; // Replace with your WiFi credentials
+//const char *ssid = "CARLA";
+//const char *password = "amorpropio";
+const char *password = "augusto123";
 const int serverPort = 8081; // Change this if needed
-
+//Ip na rede do pai 192.168.7.252
 WiFiServer server(serverPort);
 
 // Parse the values received from server to macros
